@@ -38,7 +38,7 @@ else{
 
 
   process.on('uncaughtException', function(err){
-      console.log("Sorry, Error Happens");
+      console.log(err);
       //Send some notification about the error  
       process.exit(1);
   });
