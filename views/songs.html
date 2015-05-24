@@ -1,0 +1,25 @@
+<% include header.html %>
+
+<body id="page-top" class="index">
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header page-scroll">
+                <a class="navbar-brand" href="/">Home</a>
+            </div>
+        </div>
+    </nav>
+    <header>
+        <div class="container">
+          <div >
+            <span class="title"><h1>Songs</h1></span>
+            <ul id="songs" class="list-unstyled">
+              <% songs.forEach(function(song){ %>
+                <li><a href="/music/<%= song.name %>" download><%= song.name %> </a></li>
+              <% }) %>
+            </ul>
+          </div>
+        </div>
+    </header>
+</body>
+</html>
