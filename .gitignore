@@ -1,1 +1,5 @@
+
+# Dependency directory
+.gitignore
+public/music/
 node_modules

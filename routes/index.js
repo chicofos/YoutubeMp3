@@ -19,7 +19,6 @@ function updateList(res){
     });
 
   });
-
 }
 
   function onSongs(req,res){

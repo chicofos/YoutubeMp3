@@ -9,7 +9,12 @@ module.exports = function(id, callback){
       if (error !== null) {
           return callback(error);
       }
+      var fi = stdout.split("\n")[6];
+      console.log(fi);
+      var path = fi.split(":")[1].trim().replace("/home/chico/Documents/Development/YoutubeMp3/public/",'');
+      console.log(path);
+
       console.log("Mp3 with id: %s is Done!", id);
-      return callback(null, 'Mp3 Downloaded Successfully!');
+      return callback(null, path);
    });
 }
