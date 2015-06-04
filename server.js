@@ -1,6 +1,5 @@
 var express = require('express');
 var app = express();
-var routes = require('./routes')(app);
 var io = require('./realtime');
 var cluster = require('cluster');
 
@@ -30,12 +29,15 @@ else{
   app.set('view engine', 'html');
   app.use(express.static(__dirname + '/public'));
   app.use(express.static(__dirname + '/public/music'));
+  app.use(express.static(__dirname + '/public/dist'));
 
+  //Routes
+  var routes = require('./routes')(app);
+  
   //Listen
   var server = app.listen(port, onListen);
 
   io(server);
-
 
   process.on('uncaughtException', function(err){
       console.log(err);

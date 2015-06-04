@@ -1,11 +1,10 @@
 var fs = require('fs');
+var path = require('path');
 
 module.exports = function(callback){
 
-
-  var path = "/home/chico/Documents/Development/YoutubeMp3/public/music";
-
-  fs.readdir(path, function(err, files){
+  fs.readdir(path.dirname(__dirname)+ '/public/music', function(err, files){
+    
     var songs = [];
     if(err) console.log(err);
       

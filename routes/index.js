@@ -4,12 +4,13 @@ var songs = require('../playlist');
 module.exports = function(app){
 
   app.get('/', onRequest);
-  app.get('/songs', onSongs);
+  app.get('/songs', updateList);
+  app.get('*', notFound);
 
-  var playlist = [];
+var playlist = [];
 
-function updateList(res){
-  //get available songs
+function updateList(req, res){
+
   songs(function(list){
 
     res.render('songs', {
@@ -21,15 +22,16 @@ function updateList(res){
   });
 }
 
-  function onSongs(req,res){
-    updateList(res);
-  }
+function notFound(req,res){
+  res.render('notfound');
+}
 
-  function onRequest(req, res){
+function onRequest(req, res){
     res.render('index',{
       title: 'Index',
       header : "Welcome"
     });
   }
+
 
 }

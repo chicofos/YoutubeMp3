@@ -9,9 +9,17 @@ module.exports = function(id, callback){
       if (error !== null) {
           return callback(error);
       }
-      var fi = stdout.split("\n")[6];
+
+      var fi; 
+      var log = stdout.split("\n");
+
+      if(log[6].indexOf('Destination:') != -1)
+        fi = log[6];
+      else
+        fi = log[7]
+
       console.log(fi);
-      var path = fi.split(":")[1].trim().replace("/home/chico/Documents/Development/YoutubeMp3/public/",'');
+      var path = fi.split(":")[1].trim().replace("/home/chico/Documents/Development/YoutubeMp3/public/dist/sweetalert.css",'');
       console.log(path);
 
       console.log("Mp3 with id: %s is Done!", id);

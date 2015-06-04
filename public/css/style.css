@@ -9,12 +9,14 @@ body {
     background-color: #e74c3c;
 }
 
+
 .btnDownload{
     color:black;
 }
 .inputDownload{
     width: 200px;
 }
+
 p {
     font-size: 20px;
 }
@@ -23,9 +25,8 @@ p.small {
     font-size: 16px;
 }
 
-a{
-    color: white; 
-}
+.list-unstyled a {color: white;}
+
 a:hover,
 a:focus,
 a:active,
@@ -563,3 +564,4 @@ width: 50%;
 border-bottom:1px solid #D83737;
 
 }
+
