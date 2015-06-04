@@ -16,10 +16,11 @@ module.exports = function(server){
         downloader(id, function(err, result){
           console.log('result: %s', result);
           if(err){
+            console.log(err);
             socket.emit("result", "error");
           }
           else{
-            var song = result.replace("music/",'');
+            var song = result.replace("/music/",'');
             socket.emit("result", { "link" : result, "name" : song });
           }
         });    
@@ -27,7 +28,7 @@ module.exports = function(server){
 
     socket.on('delete', function(file){
       
-      var filePath = path.dirname(__dirname)+ '/public/' + file.name;
+      var filePath = path.dirname(__dirname)+ '/public' + file.name;
       console.log('deleting: ' + filePath);
 
         fs.unlink(filePath , function(err){

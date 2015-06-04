@@ -7578,8 +7578,8 @@ socket.on('result', function(data){
 });
 
 function showError(){
-  sweetAlert("Oops...", "Something went wrong!\n Please check your URL", "error");
-  input.value="";
+  sweetAlert("Oops...", "Something went wrong! \n Please check your URL", "error");
+  input.value = "";
 };
 
 function success(data){
@@ -7589,8 +7589,8 @@ function success(data){
     text: "<a href='"+data.link+"' download>"+data.name+"</a>",     
     html: true
   }, function(){
-    input.value="";
-    socket.emit('delete',{ name:data.link });
+    input.value = "";
+    socket.emit('delete',{ name : data.link });
   });
 }
 },{"socket.io-client":1,"sweetalert":51}]},{},[52]);
