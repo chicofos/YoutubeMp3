@@ -1,13 +1,58 @@
-
-var songs = require('../playlist');
+var songs = require('../playlist'),
+    fs = require('fs'),
+    path = require('path'),
+    async = require('async'),
+    downloader = require('../youtube-dl');
 
 module.exports = function(app){
 
+  app.post('/Datos', onDataRequest);
   app.get('/', onRequest);
   app.get('/songs', updateList);
   app.get('*', notFound);
 
-var playlist = [];
+  var playlist = [];
+
+  function onDataRequest(req,res){
+
+  async.parallel([
+
+    function(callback) {
+
+     var id = req.body.id;
+     id = id.split("=")[1];
+        
+     downloader(id, function(err, result){
+
+        if(err || result === "") { 
+          console.log("Error: " + err); 
+          callback(true); 
+          return; 
+        }
+
+        var filePath = "C:" + result.split(":")[2];
+        var stat = fs.statSync(filePath);
+
+        callback(false, filePath);
+
+        });
+      }
+    ],
+    //Result of all functions
+    function(err, results) {
+
+      if(err) { 
+        console.log("Error: " + err); 
+        res.send(500, "Server Error"); 
+        return; 
+      }
+
+      var path = results[0];
+      var streamData = fs.createReadStream(path);
+      streamData.pipe(res);
+    });
+
+  }
 
 function updateList(req, res){
 

@@ -2,6 +2,7 @@ var socketio = require('socket.io');
 var fs = require('fs');
 var downloader = require('../youtube-dl');
 var path = require('path');
+var request = require('request');
 
 module.exports = function(server){
 

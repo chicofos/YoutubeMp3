@@ -5,3 +5,6 @@ public/music/
 node_modules
 *.pem
 *.cert
+*.mp3
+
+.vscode/

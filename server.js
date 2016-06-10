@@ -1,11 +1,11 @@
 var fs = require('fs');
-var https = require('https');
+var http = require('http');
 var express = require('express');
 var app = express();
 var io = require('./realtime');
 var favicon = require('serve-favicon');
 var morgan = require('morgan');
-
+var bodyParser = require('body-parser');
 
 var port = process.env.PORT || 3000;
 
@@ -21,15 +21,26 @@ var port = process.env.PORT || 3000;
   app.use(express.static(__dirname + '/public/dist'));
   app.use(morgan('combined'))
 
+  app.use(bodyParser.urlencoded());
+  app.use(bodyParser.json());
+
+  app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+  });
+
   //Routes
   var routes = require('./routes')(app);
   
-  //Listen
-   var server = https.createServer({
-      key: fs.readFileSync('key.pem'),
-      cert: fs.readFileSync('cert.pem')
-    }, app).listen(port, onListen);
+  // //Listen
+  //  var server = https.createServer({
+  //     key: fs.readFileSync('key.pem'),
+  //     cert: fs.readFileSync('cert.pem')
+  //   }, app).listen(port, onListen);
 
+var server = http.createServer(app)
+server.listen(port,onListen);
 
   io(server);
 

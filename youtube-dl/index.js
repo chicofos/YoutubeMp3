@@ -19,13 +19,12 @@ module.exports = function(id, callback){
       if(log[6].indexOf('Destination:') != -1)
         fi = log[6];
       else
-        fi = log[7]
+        fi = log[5]
 
-      console.log(fi);
-      var path = fi.split(":")[1].trim().replace(publicPath,'');
-      console.log(path);
+      var path = fi.trim().replace(publicPath,'');
 
-      console.log("Mp3 with id: %s is Done!", id);
+      console.log('PATH:  ' + path);
+      console.log("Mp3 id %s  Done!", id);
       return callback(null, path);
    });
 }
