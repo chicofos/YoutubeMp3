@@ -19,7 +19,7 @@ var port = process.env.PORT || 3000;
   app.use(express.static(__dirname + '/public'));
   app.use(express.static(__dirname + '/public/music'));
   app.use(express.static(__dirname + '/public/dist'));
-  app.use(morgan('combined'))
+  app.use(morgan(':method :url :status :res[content-length] - :response-time ms'))
 
   app.use(bodyParser.urlencoded());
   app.use(bodyParser.json());

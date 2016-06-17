@@ -1,5 +1,6 @@
 var path = require('path');
 var exec = require('child_process').exec;
+var iconv  = require('iconv-lite');
 
 module.exports = function(id, callback){
   //call command
@@ -8,23 +9,26 @@ module.exports = function(id, callback){
   var cmd = 'youtube-dl --extract-audio --audio-format mp3 --output "'+publicPath+'/music/%(title)s.%(ext)s" https://www.youtube.com/watch?v=' + id;
   console.log("Downloading ID: %s", id);
 
-  var child = exec(cmd, function(error,stdout,stderr){
-      if (error !== null) {
-          return callback(error);
-      }
+  var child = exec(cmd,{ encoding: 'buffer' }, function(error,stdout,stderr){
+    if (error !== null) {
+      return callback(error);
+    }
 
-      var fi; 
-      var log = stdout.split("\n");
+    var fi;
 
-      if(log[6].indexOf('Destination:') != -1)
-        fi = log[6];
-      else
-        fi = log[5]
+    var utf8String = iconv.decode(new Buffer(stdout), "ISO-8859-1"); 
+    var log = utf8String.split("\n");
 
-      var path = fi.trim().replace(publicPath,'');
+    for (var i=0; i < log.length; i++) {
+        if(log[i].indexOf('Destination:') != -1){
+          fi = log[i];
+        }
+    }    
 
-      console.log('PATH:  ' + path);
-      console.log("Mp3 id %s  Done!", id);
-      return callback(null, path);
-   });
+    var path = fi.trim().replace(publicPath,'');
+
+    console.log('PATH:  ' + path);
+    console.log("Mp3 id %s  Done!", id);
+    return callback(null, path);
+  });
 }
